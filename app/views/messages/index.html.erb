@@ -11,6 +11,8 @@
 				<% num_unread_messages += 1 %>
 			<% end  %>
 			<%= "(#{num_unread_messages})" if num_unread_messages > 0 %>
+			
+			<%= "(Letzte Nachricht: #{dialog.updated_at.localtime.strftime("%d.%m.%Y %H:%M:%S")})" %>
 		</li>
 	<% end %>
 	

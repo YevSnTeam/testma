@@ -10,22 +10,13 @@ class MessagesController < ApplicationController
   
   
   def create
-    #raise params.inspect
     user = User.find(params[:message][:recipient_id])
     dialog = current_user.find_dialog_with(user)
-    
-    logger.debug "---------------------------------> DIALOG: #{dialog}"
-    
     if dialog.nil?
-      
-      logger.debug "---------------------------------> DIALOG.NIL? => TRUE:   #{dialog}"
-      
-      @message = current_user.sent_messages.build(:recipient_id => params[:message][:recipient_id], :body => params[:message][:body], :dialog_id => nil)
-      
-      logger.debug "---------------------------------> Message: #{@message.attributes.inspect}"
-      
+      @message = current_user.sent_messages.build(:recipient_id => params[:message][:recipient_id], :body => params[:message][:body], :dialog_id => nil)   
     else dialog.dialog_id.nil?
       @message = current_user.sent_messages.build(:recipient_id => params[:message][:recipient_id], :body => params[:message][:body], :dialog_id => dialog.id)
+      dialog.update_attributes(:updated_at => Time.now)
     end
     unless @message.save
         flash[:notice] = "Nachricht konnte nicht gesendet werden"
@@ -34,7 +25,7 @@ class MessagesController < ApplicationController
   end
   
   def index
-    @dialogs = current_user.all_dialogs   
+    @dialogs = current_user.all_dialogs.sort_by{|e| e[:updated_at]}.reverse
   end
   
 end

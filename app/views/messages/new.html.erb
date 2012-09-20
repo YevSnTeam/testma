@@ -3,12 +3,14 @@
 <% if dialog_to_show %>
 <ul>
 	<li>
-		<b><%= link_to dialog_to_show.sender.fullname, dialog_to_show.sender %></b></br>
+		<b><%= link_to dialog_to_show.sender.fullname, dialog_to_show.sender %></b>
+		<i><%= dialog_to_show.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") %></i></br>
 		<%= dialog_to_show.body %>
 	</li>
 	<% dialog_to_show.replies.each do |m| %>
 		<li>
-			<b><%= link_to m.sender.fullname, m.sender %></b></br>
+			<b><%= link_to m.sender.fullname, m.sender %></b>
+			<i><%= m.created_at.localtime.strftime("%d.%m.%Y %H:%M:%S") %></i></br>
 			<%= m.body %>			
 		</li>
 	<% end %>
