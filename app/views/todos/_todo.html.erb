@@ -1,8 +1,15 @@
 
 <%= content_tag_for(:tr, todo) do %>
     <td><%= todo.name %></td>
+   
+    <% if todo.not_in_doing?(todo) %>
+    	<td><%= link_to 'aus eigenen Todos entfernen', deleteowntodo_url(todo) , confirm: 'Wollen Sie dieses Todo wirklich entfernen?' %></td>
+    <% else %>
+    	<td><%= link_to 'zu eigenen Todos hinzufügen', addtodo_url(todo)%></td>
+    <% end %>
+    
     <td><%= link_to 'Anzeigen', todo %></td>
-    <td><%= link_to 'Hinzufügen', addtodo_url(todo)%></td>
+    <td>
     <td>Anzahl erledigt</td>
     <td><%= link_to 'Löschen', todo, confirm: 'Wollen Sie diesen Datensatz wirklich löschen?', method: :delete, remote:true %></td>
   <% end %>

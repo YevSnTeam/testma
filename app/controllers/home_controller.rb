@@ -4,7 +4,6 @@ class HomeController < ApplicationController
      @search = Todo.search(params[:search])
      @todos = @search.all.sort_by{rand}
      @todo = Todo.all
-     
     
      
   end

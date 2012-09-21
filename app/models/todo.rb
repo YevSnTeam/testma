@@ -24,7 +24,8 @@ class Todo < ActiveRecord::Base
   attr_accessible :description, :name 
   
   
-  
-  
-  
+  def not_in_doing?(todo)      
+    todo.doings.exists?    
+  end
+ 
 end
